@@ -3,19 +3,19 @@ import Collection from '@/models/Collection';
 import connectDB from '@/lib/dbConnect';
 import { isValidObjectId } from 'mongoose';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     await connectDB();
     
     // Validate ObjectID format
-    if (!isValidObjectId(params.id)) {
+    if (!isValidObjectId((await params).id)) {
       return NextResponse.json(
         { success: false, error: 'Invalid collection ID format' },
         { status: 400 }
       );
     }
 
-    const collection = await Collection.findById(params.id)
+    const collection = await Collection.findById((await params).id)
       .populate({
         path: 'nfts',
         select: 'name description assetUrl previewUrl assetType price isListed creator owner',

@@ -17,11 +17,15 @@ const CollectionSchema = new Schema({
     ref: 'NFT',
     default: []
   }],
- 
+  collectionType: {  // Add this field to your schema
+    type: String,
+    enum: ['homogeneous', 'heterogeneous'],
+    default: 'homogeneous'
+  },
   assetType: { 
     type: String,
     enum: ['image', 'video', 'audio', '3d', 'inft', 'mixed'],
-    required: function() {
+    required: function(this: any) {  // Add type annotation for 'this'
       return this.collectionType === 'homogeneous';
     }
   },
@@ -34,18 +38,15 @@ const CollectionSchema = new Schema({
     type: String,
     required: true
   },
-
-    floorPrice: {
-      type: Number,
-      default: 0
-    }
+  floorPrice: {
+    type: Number,
+    default: 0
   }
- 
-, {
-   
+}, {
+  timestamps: true,  // Automatically adds createdAt and updatedAt
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
-  strictPopulate: false // Add this to allow population even if no documents exist
+  strictPopulate: false
 });
 
 // Update timestamps on save
@@ -57,6 +58,7 @@ CollectionSchema.pre('save', function(next) {
 // Update stats when NFTs are added/removed
 CollectionSchema.methods.updateStats = async function() {
   const nftCount = await mongoose.model('NFT').countDocuments({ collection: this._id });
+  this.stats = this.stats || {};
   this.stats.totalItems = nftCount;
   
   // You can add more complex stat calculations here

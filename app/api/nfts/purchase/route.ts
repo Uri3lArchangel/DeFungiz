@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     // Update NFT ownership and status
     nft.isListed = false;
     nft.owner = buyerAddress.toLowerCase();
-    nft.price = price;
+    nft.price = null;
 
     // Add transaction to history
     nft.history.push({

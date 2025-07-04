@@ -17,7 +17,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-gray-400 mb-6">
-              The next-generation NFT marketplace powered by 0G Labs' high-performance blockchain.
+              The next-generation NFT marketplace powered by 0G Labs&apos; high-performance blockchain.
               Experience instant trades, near-zero fees, and limitless scalability.
             </p>
             <div className="flex space-x-4">

@@ -327,8 +327,8 @@ const CreatePage = () => {
       await connectWallet();
       let assetUrl = "";
       let previewUrl = "";
-      let collectionAssetUrls: { url: string; type: string }[] = [];
-      let collectionPreviewUrls: string[] = [];
+      const collectionAssetUrls: { url: string; type: string }[] = [];
+      const collectionPreviewUrls: string[] = [];
       let collectionMainPreviewUrl = "";
 
       if (activeTab === "single") {
@@ -427,7 +427,7 @@ const CreatePage = () => {
     if (assetType === "image") {
       return (
         <div className="h-64 w-full bg-gray-800/50 rounded-xl flex items-center justify-center overflow-hidden">
-          <img
+          <Image
             src={URL.createObjectURL(nftData.asset)}
             alt="NFT preview"
             className="max-h-full max-w-full object-contain"
@@ -495,7 +495,7 @@ const CreatePage = () => {
               className="bg-gray-800/50 rounded-lg overflow-hidden"
             >
               {collectionData.assets[index] ? (
-                <img
+                <Image
                   src={URL.createObjectURL(collectionData.assets[index])}
                   alt={`Asset ${index + 1}`}
                   className="h-32 w-full object-cover"
@@ -539,7 +539,7 @@ const CreatePage = () => {
               className="bg-gray-800/50 rounded-lg overflow-hidden"
             >
               {collectionPreviewUrls[index] ? (
-                <img
+                <Image
                   src={collectionPreviewUrls[index]}
                   alt={`Preview ${index + 1}`}
                   className="h-32 w-full object-cover"
@@ -1037,7 +1037,7 @@ const CreatePage = () => {
                     <div className="mb-6">
                       <h4 className="text-lg font-semibold mb-2">Main Preview</h4>
                       <div className="h-64 w-full bg-gray-800/50 rounded-xl flex items-center justify-center overflow-hidden">
-                        <img
+                        <Image
                           src={URL.createObjectURL(collectionData.collectionPreviewImage)}
                           alt="Collection preview"
                           className="max-h-full max-w-full object-contain"

@@ -6,6 +6,7 @@ import { useWallet } from "@/context/WalletContext";
 import dynamic from "next/dynamic";
 import AuctionModal from "@/components/AuctionModal";
 import { purchaseNFT } from "@/utils/purchaseNFT";
+import Image from "next/image";
 
 // Dynamically import 3D viewer only when needed
 const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
@@ -104,7 +105,7 @@ const NFTDetailPage = () => {
       if (isNaN(Number(nft.price))) {
         return;
       }
-      const result = await purchaseNFT(
+     await purchaseNFT(
         nft._id.toString(),
         Number(nft.price),
         nft.owner,
@@ -162,38 +163,38 @@ const NFTDetailPage = () => {
     }
   };
 
-  const handleCancelListing = async () => {
-    if (!isConnected || !account || !nft) return;
+  // const handleCancelListing = async () => {
+  //   if (!isConnected || !account || !nft) return;
 
-    const confirmed = confirm("Are you sure you want to cancel this listing?");
-    if (!confirmed) return;
+  //   const confirmed = confirm("Are you sure you want to cancel this listing?");
+  //   if (!confirmed) return;
 
-    try {
-      const response = await fetch("/api/nfts/cancel", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nftId: nft.id,
-          owner: account,
-        }),
-      });
+  //   try {
+  //     const response = await fetch("/api/nfts/cancel", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         nftId: nft.id,
+  //         owner: account,
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Failed to cancel listing");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Failed to cancel listing");
+  //     }
 
-      const tx = await response.json();
-      alert(`Listing canceled successfully! Transaction hash: ${tx.hash}`);
-      // Refresh NFT data
-      const nftResponse = await fetch(`/api/nfts/${id}`);
-      setNFT(await nftResponse.json());
-    } catch (error) {
-      console.error("Cancel error:", error);
-      alert("Failed to cancel listing. Please try again.");
-    }
-  };
+  //     const tx = await response.json();
+  //     alert(`Listing canceled successfully! Transaction hash: ${tx.hash}`);
+  //     // Refresh NFT data
+  //     const nftResponse = await fetch(`/api/nfts/${id}`);
+  //     setNFT(await nftResponse.json());
+  //   } catch (error) {
+  //     console.error("Cancel error:", error);
+  //     alert("Failed to cancel listing. Please try again.");
+  //   }
+  // };
 
   const handlePlaceBid = async () => {
     if (!isConnected || !account || !nft) return;
@@ -320,7 +321,7 @@ const NFTDetailPage = () => {
           <div className="lg:w-1/2">
             <div className="bg-gradient-to-br from-gray-900 to-gray-950 border border-cyan-900/50 rounded-2xl overflow-hidden">
               {nft.assetType === "image" && (
-                <img
+                <Image
                   src={nft.assetUrl}
                   alt={nft.name}
                   className="w-full h-[500px] object-contain"
@@ -341,7 +342,7 @@ const NFTDetailPage = () => {
 
               {nft.assetType === "audio" && (
                 <div className="h-[500px] flex flex-col items-center justify-center bg-gradient-to-tr from-cyan-700/10 to-purple-700/10">
-                  <img
+                  <Image
                     src={nft.previewUrl}
                     alt={nft.name}
                     className="w-64 h-64 rounded-lg object-cover mb-6"

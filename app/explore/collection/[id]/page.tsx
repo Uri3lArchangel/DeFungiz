@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { isValidObjectId } from '@/utils/validateObjectId';
+import Image from 'next/image';
 interface NFT {
   _id: string;
   name: string;
@@ -126,7 +127,7 @@ const CollectionDetailPage = () => {
       <div className="min-h-screen bg-gradient-to-b from-gray-950 to-[#0a0f1f] text-white flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-3xl font-bold">Collection Not Found</h2>
-          <p className="mt-4 text-gray-400">The collection you're looking for doesn't exist or has been removed</p>
+          <p className="mt-4 text-gray-400">The collection you&apos;re looking for doesn&apos;t exist or has been removed</p>
           <button 
             onClick={() => router.push('/collections')}
             className="mt-6 bg-cyan-600 hover:bg-cyan-500 px-6 py-3 rounded-xl transition-all duration-300 cursor-pointer"
@@ -146,7 +147,7 @@ const CollectionDetailPage = () => {
           <div className="lg:w-1/3">
             <div className="bg-gradient-to-br from-gray-900 to-gray-950 border border-cyan-900/50 rounded-2xl overflow-hidden">
               <div className="h-80 flex items-center justify-center">
-                <img 
+                <Image 
                   src={collection.previewImage} 
                   alt={collection.name}
                   className="w-full h-full object-cover"
@@ -218,7 +219,7 @@ const CollectionDetailPage = () => {
                 >
                   <div className="relative">
                     <div className="h-56 flex items-center justify-center bg-gradient-to-tr from-cyan-900/20 to-blue-900/20">
-                      <img 
+                      <Image 
                         src={nft.previewUrl || nft.assetUrl || '/default-nft.png'}
                         alt={nft.name}
                         className="w-full h-full object-cover"

@@ -34,7 +34,7 @@ export async function GET(
           strictPopulate: false,
         },
       })
-      .lean();
+      .lean() as unknown as any;
 
     if (!nft) {
       return NextResponse.json(

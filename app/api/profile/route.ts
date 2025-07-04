@@ -46,11 +46,11 @@ export async function GET(request: Request) {
         options: { lean: true },
       })
       .select("name assetUrl previewUrl assetType price collection isListed")
-      .lean();
+      .lean() as unknown as any;
     // Get collections created by this user
     const collections = await Collection.find({ creator: lowercaseAddress })
       .select("name logo stats.floorPrice")
-      .lean();
+      .lean() as unknown as any;
 
     // Format response
     const response = {
@@ -64,7 +64,7 @@ export async function GET(request: Request) {
         createdAt: user!.createdAt,
         updatedAt: user!.updatedAt,
       },
-      nfts: nfts.map((nft) => ({
+      nfts: nfts.map((nft:any) => ({
         id: nft._id.toString(),
         name: nft.name,
         assetUrl: nft.assetUrl,
@@ -81,7 +81,7 @@ export async function GET(request: Request) {
             }
           : null,
       })),
-      collections: collections.map((collection) => ({
+      collections: collections.map((collection:any) => ({
         id: collection._id.toString(),
         name: collection.name,
         logo: collection.logo,

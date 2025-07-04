@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useWallet } from "@/context/WalletContext";
 import { motion } from "framer-motion";
 import { useAppContext } from "@/src/context/AppContext";
+import Image from "next/image";
 
 const CollectionsPage = () => {
   const { isConnected, account, isNetworkValid, connectWallet } = useWallet();
@@ -88,7 +89,7 @@ const CollectionsPage = () => {
                 NFT Collections
               </h1>
               <p className="mt-6 text-xl text-gray-300 max-w-2xl">
-                Discover unique NFT collections powered by 0G Chain's
+                Discover unique NFT collections powered by 0G Chain&apos;s
                 revolutionary blockchain technology.
               </p>
 
@@ -229,7 +230,7 @@ const CollectionsPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-2">No Collections Found</h3>
               <p className="text-gray-400 max-w-md mx-auto">
-                We couldn't find any collections matching your search. Try
+                We couldn&apos;t find any collections matching your search. Try
                 different keywords or explore trending collections.
               </p>
               <button
@@ -259,7 +260,7 @@ const CollectionsPage = () => {
                     >
                       <div className="relative h-48 overflow-hidden">
                         {collection.previewImage ? (
-                          <img
+                          <Image
                             src={collection.previewImage}
                             alt={collection.name}
                             className="w-full h-full object-cover"
@@ -369,7 +370,7 @@ const CollectionsPage = () => {
                 Why Build on 0G Chain?
               </h2>
               <p className="mt-4 text-xl text-gray-400 max-w-3xl mx-auto">
-                Leverage 0G Labs' revolutionary blockchain technology for your
+                Leverage 0G Labs&apos; revolutionary blockchain technology for your
                 NFT collections
               </p>
             </div>
@@ -389,7 +390,7 @@ const CollectionsPage = () => {
                 </h3>
                 <p className="mt-3 text-gray-400">
                   Mint and trade NFTs with minimal transaction costs thanks to
-                  0G's efficient architecture. Average cost is just $0.001 per
+                  0G&apos;s efficient architecture. Average cost is just $0.001 per
                   transaction.
                 </p>
               </motion.div>
@@ -407,7 +408,7 @@ const CollectionsPage = () => {
                   Blazing Fast Speed
                 </h3>
                 <p className="mt-3 text-gray-400">
-                  Experience near-instant transactions with 0G's high-throughput
+                  Experience near-instant transactions with 0G&apos;s high-throughput
                   blockchain capable of processing thousands of transactions per
                   second.
                 </p>
@@ -426,7 +427,7 @@ const CollectionsPage = () => {
                   Enterprise-Grade Security
                 </h3>
                 <p className="mt-3 text-gray-400">
-                  Your assets are protected by 0G's robust consensus mechanism
+                  Your assets are protected by 0G&apos;s robust consensus mechanism
                   and decentralized validator network with military-grade
                   encryption.
                 </p>

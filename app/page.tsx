@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useWallet } from '@/context/WalletContext';
 
 const LandingPage = () => {
-  const { isConnected, account, isNetworkValid, connectWallet } = useWallet();
+  const { isConnected, account, connectWallet } = useWallet();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(()=>{
     setIsLoading(false)
@@ -30,7 +30,7 @@ const LandingPage = () => {
                 Discover, Collect & Trade NFTs on 0G Chain
               </h1>
               <p className="mt-6 text-xl text-gray-300 max-w-2xl">
-                The next-generation NFT marketplace powered by 0G Labs' high-performance blockchain. Experience instant trades, near-zero fees, and limitless scalability.
+                The next-generation NFT marketplace powered by 0G Labs&apos; high-performance blockchain. Experience instant trades, near-zero fees, and limitless scalability.
               </p>
               
               <div className="mt-10 flex flex-wrap gap-4">
@@ -147,7 +147,7 @@ const LandingPage = () => {
               Why Choose 0G NFT Marketplace?
             </h2>
             <p className="mt-4 text-xl text-gray-400 max-w-3xl mx-auto">
-              Built on 0G Labs' revolutionary blockchain technology
+              Built on 0G Labs&apos; revolutionary blockchain technology
             </p>
           </div>
           
@@ -160,7 +160,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-xl font-bold text-white">Lightning Fast Transactions</h3>
               <p className="mt-3 text-gray-400">
-                Experience near-instant transaction finality thanks to 0G's high-performance architecture. 
+                Experience near-instant transaction finality thanks to 0G&apos;s high-performance architecture. 
                 No more waiting for confirmations.
               </p>
             </div>
@@ -174,7 +174,7 @@ const LandingPage = () => {
               <h3 className="text-xl font-bold text-white">Near-Zero Gas Fees</h3>
               <p className="mt-3 text-gray-400">
                 Create, trade, and collect NFTs with minimal transaction costs. 
-                0G's efficient architecture makes microtransactions feasible.
+                0G&apos;s efficient architecture makes microtransactions feasible.
               </p>
             </div>
             
@@ -187,7 +187,7 @@ const LandingPage = () => {
               <h3 className="text-xl font-bold text-white">Massive Scalability</h3>
               <p className="mt-3 text-gray-400">
                 Built to handle millions of transactions per second. 
-                0G's modular architecture ensures the platform never slows down.
+                0G&apos;s modular architecture ensures the platform never slows down.
               </p>
             </div>
             
@@ -199,7 +199,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-xl font-bold text-white">Enterprise-Grade Security</h3>
               <p className="mt-3 text-gray-400">
-                Your digital assets are protected by 0G's advanced cryptographic security 
+                Your digital assets are protected by 0G&apos;s advanced cryptographic security 
                 and decentralized consensus mechanism.
               </p>
             </div>
@@ -213,7 +213,7 @@ const LandingPage = () => {
               <h3 className="text-xl font-bold text-white">Advanced NFT Capabilities</h3>
               <p className="mt-3 text-gray-400">
                 Support for complex NFT types including dynamic, programmable, 
-                and multi-asset NFTs with 0G's flexible storage.
+                and multi-asset NFTs with 0G&apos;s flexible storage.
               </p>
             </div>
             
@@ -259,7 +259,7 @@ const LandingPage = () => {
                         <h3 className="text-xl font-bold text-white">Create a Wallet</h3>
                         <p className="mt-2 text-gray-400">
                           Set up a Web3 wallet like MetaMask and connect to the 0G network. 
-                          We'll help you switch automatically.
+                          We&apos;ll help you switch automatically.
                         </p>
                       </div>
                     </div>
@@ -315,7 +315,7 @@ const LandingPage = () => {
                     Built for the Future of Digital Ownership
                   </h3>
                   <p className="mt-6 text-xl text-gray-400">
-                    0G NFT Marketplace leverages the cutting-edge technology of 0G Labs' 
+                    0G NFT Marketplace leverages the cutting-edge technology of 0G Labs&apos; 
                     blockchain to deliver an unparalleled NFT experience. 
                   </p>
                   
