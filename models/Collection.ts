@@ -27,12 +27,14 @@ const CollectionSchema = new Schema({
     enum: ['image', 'video', 'audio', '3d', 'inft', 'mixed'],
     required: function(this: any) {  // Add type annotation for 'this'
       return this.collectionType === 'homogeneous';
-    }
+    },
+    default: 'image'
   },
   creator: { 
     type: String, 
     required: true,
-    index: true
+    index: true,
+    ref: 'User'
   },
   previewImage: { 
     type: String,

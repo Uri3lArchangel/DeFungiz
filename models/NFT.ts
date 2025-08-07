@@ -28,12 +28,14 @@ const NFTSchema = new Schema({
     required: true
   },
   creator: { 
-    type: String, 
+    type: Schema.Types.ObjectId, 
+    ref: 'User',
     required: true,
     lowercase:true
   },
   owner: { 
-    type: String, 
+    type: Schema.Types.ObjectId, 
+    ref: 'User',
     required: true,
     lowercase:true
 
@@ -81,6 +83,11 @@ const NFTSchema = new Schema({
   updatedAt: { 
     type: Date, 
     default: Date.now 
+  },
+  metadataURI: {
+    type: String,
+    required: true,
+    default: ''
   }
 },{ timestamps: true });
 
