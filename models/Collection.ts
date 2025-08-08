@@ -1,6 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 
 const CollectionSchema = new Schema({
+  uriId: {
+    type: String,
+    required: true,
+    unique: true
+  },
   name: { 
     type: String, 
     required: true,
@@ -11,6 +16,10 @@ const CollectionSchema = new Schema({
     type: String,
     trim: true,
     maxlength: 1000
+  },
+  amount: {
+    type: Number,
+    default: 1
   },
   nfts: [{
     type: Schema.Types.ObjectId,
@@ -27,20 +36,26 @@ const CollectionSchema = new Schema({
     enum: ['image', 'video', 'audio', '3d', 'inft', 'mixed'],
     required: function(this: any) {  // Add type annotation for 'this'
       return this.collectionType === 'homogeneous';
-    }
+    },
+    default: 'image'
   },
   creator: { 
     type: String, 
     required: true,
-    index: true
+    index: true,
+    ref: 'User'
   },
-  previewImage: { 
-    type: String,
-    required: true
+  metadata: {
+    type: Object,
+    default: {}
   },
   floorPrice: {
     type: Number,
     default: 0
+  },
+  voucher: {
+    type: Object,
+    default: {}
   }
 }, {
   timestamps: true,  // Automatically adds createdAt and updatedAt

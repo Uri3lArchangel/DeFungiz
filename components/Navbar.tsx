@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useWallet } from '@/context/WalletContext';
+import { createUser, getUser } from '@/lib/user';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -25,6 +26,11 @@ const Navbar = () => {
 
   const handleConnect = async () => {
     await connectWallet();
+    const user = await createUser(account);
+    if (!user.success) {
+      console.error('Failed to create user:', user.error);
+      disconnectWallet();
+    }
   };
 
   const isActive = (href: string) => {
