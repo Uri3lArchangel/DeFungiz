@@ -1,6 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 
 const NFTSchema = new Schema({
+  uriId: {
+    type: String,
+    required: true,
+    unique: true
+  },
   collection: { 
     type: Schema.Types.ObjectId,
     ref: 'Collection',
@@ -58,6 +63,15 @@ const NFTSchema = new Schema({
     type: Boolean,
     default: true
   },
+  tokenURI: {
+    type: String,
+    required: true,
+    default: ''
+  },
+  voucher: {
+    type: Object,
+    default: {}
+  },
   auctionDetails: {
     startingPrice: Number,
     reservePrice: Number,
@@ -84,10 +98,9 @@ const NFTSchema = new Schema({
     type: Date, 
     default: Date.now 
   },
-  metadataURI: {
-    type: String,
-    required: true,
-    default: ''
+  metadata: {
+    type: Object,
+    default: {}
   }
 },{ timestamps: true });
 

@@ -1,0 +1,10 @@
+{
+  "network": "og_galileo",
+  "deployer": "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199",
+  "contracts": {
+    "nftContract721": "0x391342f5acAcaaC9DE1dC4eC3E03f2678f7c78F1",
+    "nftContract1155": "0x6d925938Edb8A16B3035A4cF34FAA090f490202a",
+    "marketplace": "0xED8CAB8a931A4C0489ad3E3FB5BdEA84f74fD23E"
+  },
+  "timestamp": "2025-08-08T23:03:08.607Z"
+}

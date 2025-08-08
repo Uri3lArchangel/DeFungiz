@@ -1,6 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 
 const CollectionSchema = new Schema({
+  uriId: {
+    type: String,
+    required: true,
+    unique: true
+  },
   name: { 
     type: String, 
     required: true,
@@ -11,6 +16,10 @@ const CollectionSchema = new Schema({
     type: String,
     trim: true,
     maxlength: 1000
+  },
+  amount: {
+    type: Number,
+    default: 1
   },
   nfts: [{
     type: Schema.Types.ObjectId,
@@ -36,13 +45,17 @@ const CollectionSchema = new Schema({
     index: true,
     ref: 'User'
   },
-  previewImage: { 
-    type: String,
-    required: true
+  metadata: {
+    type: Object,
+    default: {}
   },
   floorPrice: {
     type: Number,
     default: 0
+  },
+  voucher: {
+    type: Object,
+    default: {}
   }
 }, {
   timestamps: true,  // Automatically adds createdAt and updatedAt

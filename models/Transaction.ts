@@ -4,7 +4,7 @@ import mongoose, { Schema } from 'mongoose';
 const TransactionSchema = new Schema({
   type: {
     type: String,
-    enum: ['mint', 'transfer', 'sale', 'bid', 'cancel', 'auction', 'offer', 'listing', 'purchase'],
+    enum: ['mint', 'transfer', 'sale', 'bid', 'cancel', 'auction', 'offer', 'listing', 'purchase', 'lazy_mint', 'lazy_mint_collection'],
     required: true
   },
   nft: {
