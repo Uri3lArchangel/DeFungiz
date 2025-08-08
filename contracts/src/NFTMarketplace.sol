@@ -94,6 +94,7 @@ contract DeFungizMarketplace is ReentrancyGuard, Ownable, ERC721Holder {
     event AuctionCancelled(uint256 indexed auctionId);
     event PlatformFeeListingUpdated(uint256 newFee);
     event PlatformFeeAuctionUpdated(uint256 newFee);
+    event FeesWithdrawn(uint256 amount);
     // Modifiers
     // check if listing exists
     modifier listingExistsAndActive(uint256 listingId){
@@ -168,6 +169,7 @@ contract DeFungizMarketplace is ReentrancyGuard, Ownable, ERC721Holder {
         });
 
         nftToListingId[nftContract][tokenId] = listingId;
+        listingsBySeller[msg.sender].push(listingId);
         emit ListingCreated(listingId, msg.sender, nftContract, tokenId, price);
     }
     
@@ -215,12 +217,22 @@ contract DeFungizMarketplace is ReentrancyGuard, Ownable, ERC721Holder {
         // Transfer payment to seller
         payable(listing.seller).transfer(sellerAmount);
 
-         // Transfer platform fee to owner
-        payable(owner()).transfer(PLATFORM_FEE);
+        // Platform fee stays in contract for later withdrawal
+        // payable(owner()).transfer(PLATFORM_FEE);
         
         listing.isActive = false;
         listing.updatedAt = block.timestamp;
         listing.buyer = msg.sender;
+
+        // Remove from listingsBySeller mapping
+        uint256[] storage userListings = listingsBySeller[listing.seller];
+        for (uint256 i = 0; i < userListings.length; i++) {
+            if (userListings[i] == listingId) {
+                userListings[i] = userListings[userListings.length - 1];
+                userListings.pop();
+                break;
+            }
+        }
 
         delete nftToListingId[listing.nftContract][listing.tokenId];
         emit ListingPurchased(listingId, msg.sender, msg.value);
@@ -244,6 +256,16 @@ contract DeFungizMarketplace is ReentrancyGuard, Ownable, ERC721Holder {
             listing.seller,
             listing.tokenId
         );
+
+        // Remove from listingsBySeller mapping
+        uint256[] storage userListings = listingsBySeller[listing.seller];
+        for (uint256 i = 0; i < userListings.length; i++) {
+            if (userListings[i] == listingId) {
+                userListings[i] = userListings[userListings.length - 1];
+                userListings.pop();
+                break;
+            }
+        }
 
         delete nftToListingId[listing.nftContract][listing.tokenId];
         emit ListingCancelled(listingId);
@@ -356,8 +378,8 @@ contract DeFungizMarketplace is ReentrancyGuard, Ownable, ERC721Holder {
             // Transfer payment to seller
             payable(auction.seller).transfer(sellerAmount);
             
-            // Transfer platform fee to owner
-            payable(owner()).transfer(PLATFORM_FEE);
+            // Platform fee stays in contract for later withdrawal
+            // payable(owner()).transfer(PLATFORM_FEE);
             
             emit AuctionEnded(auctionId, auction.currentBidder, auction.currentBid);
         } else {
@@ -374,6 +396,13 @@ contract DeFungizMarketplace is ReentrancyGuard, Ownable, ERC721Holder {
     function cancelAuction(uint256 auctionId) external auctionExists(auctionId) onlyAuctionSeller(auctionId) nonReentrant {
         Auction storage auction = auctions[auctionId];
         require(auction.currentBidder == address(0), "Cannot cancel auction with bids");
+        
+        // Return NFT to seller
+        IERC721(auction.nftContract).safeTransferFrom(
+            address(this),
+            auction.seller,
+            auction.tokenId
+        );
         
         auction.isActive = false;
         auction.updatedAt = block.timestamp;
@@ -467,6 +496,7 @@ contract DeFungizMarketplace is ReentrancyGuard, Ownable, ERC721Holder {
         uint256 balance = address(this).balance;
         require(balance > 0, "No fees to withdraw");
         payable(owner()).transfer(balance);
+        emit FeesWithdrawn(balance);
     }
 
     /**

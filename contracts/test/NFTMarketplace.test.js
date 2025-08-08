@@ -150,7 +150,7 @@ describe("DeFungizMarketplace", function () {
       const sellerAmount = price - platformFee;
       
       expect(await ethers.provider.getBalance(seller.address)).to.equal(initialSellerBalance + sellerAmount);
-      expect(await ethers.provider.getBalance(owner.address)).to.equal(initialOwnerBalance + platformFee);
+      expect(await ethers.provider.getBalance(owner.address)).to.equal(initialOwnerBalance);
     });
 
     it("Should reject purchase with incorrect payment", async function () {
@@ -334,7 +334,7 @@ describe("DeFungizMarketplace", function () {
       const sellerAmount = bidAmount - platformFee;
       
       expect(await ethers.provider.getBalance(seller.address)).to.equal(initialSellerBalance + sellerAmount);
-      expect(await ethers.provider.getBalance(owner.address)).to.equal(initialOwnerBalance + platformFee);
+      expect(await ethers.provider.getBalance(owner.address)).to.equal(initialOwnerBalance);
     });
 
     it("Should return NFT to seller if no bids", async function () {
@@ -366,7 +366,7 @@ describe("DeFungizMarketplace", function () {
         .to.emit(marketplace, "AuctionCancelled")
         .withArgs(1);
 
-      expect(await nftContract721.ownerOf(tokenId)).to.equal(marketplace.target);
+      expect(await nftContract721.ownerOf(tokenId)).to.equal(seller.address);
     });
 
     it("Should reject auction cancellation with bids", async function () {
@@ -448,7 +448,11 @@ describe("DeFungizMarketplace", function () {
 
       const initialBalance = await ethers.provider.getBalance(owner.address);
       await expect(marketplace.connect(owner).withdrawFees())
-        .to.be.revertedWith("No fees to withdraw");
+        .to.emit(marketplace, "FeesWithdrawn");
+
+      // Check that fees were actually withdrawn (balance should be higher)
+      const finalBalance = await ethers.provider.getBalance(owner.address);
+      expect(finalBalance).to.be.gt(initialBalance);
     });
 
     it("Should reject fee withdrawal by non-owner", async function () {
@@ -532,9 +536,8 @@ describe("DeFungizMarketplace", function () {
       await marketplace.connect(seller).createListing(1, nftContract721.target, price);
 
       const userListings = await marketplace.getUserListings(seller.address);
-      console.log("User listings:", userListings);
-      console.log("User listings length:", userListings.length);
-      expect(userListings.length).to.equal(0);
+      expect(userListings.length).to.equal(1);
+      expect(userListings[0]).to.equal(1);
     });
   });
 }); 
